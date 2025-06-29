@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@font-face {
+	font-family: 'Montserrat';
+	src: url('fonts/MontserratSubrayada-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Montserrat';
+	src: url('fonts/MontserratSubrayada-Bold.ttf') format('truetype');
+	font-weight: bold;
+	font-style: bold;
+}
+
+
+html {
+	@apply bg-surface;
+}
+
+
+@theme {
+	--font-inter: 'Inter', 'sans-serif';
+	--font-montserrat: 'Montserrat', 'sans-serif';
+	--color-surface: #E0E1DD;
+	--color-primary: #1B263B;
+	--color-secondary: #0D1B2A;
+}
