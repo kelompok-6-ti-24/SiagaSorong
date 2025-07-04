@@ -7,7 +7,7 @@
 			<h1 class="text-secondary text-[64px] leading-[64px]">
 				<span class="text-primary font-bold">Siaga </span><br /> Sorong
 			</h1>
-			<div>
+			<div class="mb-10">
 				<p class="font-inter mt-6 text-justify text-2xl">
 					<span class="text-primary pr-7 font-bold">Siaga Sorong</span>
 					adalah platform interaktif yang dirancang khusus untuk membantu warga dan pemerintah Kota Sorong
@@ -16,7 +16,7 @@
 			</div>
 			<button
 				type="button"
-				class=" bg-primary font-inter mt-4 h-16 w-80 cursor-pointer rounded-md p-2 text-3xl text-white"
+				class=" bg-primary font-inter mt-4 h-14 w-64 cursor-pointer rounded-md p-2 text-3xl text-white"
 			>
 				<a href="/deteksi"> Cek Disini </a>
 			</button>
