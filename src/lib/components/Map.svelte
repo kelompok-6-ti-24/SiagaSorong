@@ -4,6 +4,10 @@
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import { PUBLIC_VITE_MAPTILER_API_KEY } from '$env/static/public';
 
+	let searchQuery = '';
+	type Suggestion = { lat: string; lon: string; display_name: string; [key: string]: any };
+	let suggestions: Suggestion[] = [];
+	let debounceTimeout: number;
 	let map: maplibregl.Map;
 	let mapContainer: HTMLDivElement;
 	let currentMarker: maplibregl.Marker | null = null;
@@ -14,6 +18,44 @@
 
 	export let selectedCoords: { lng: number; lat: number } | null = null;
 
+	function onSearchInput(e) {
+		clearTimeout(debounceTimeout);
+		searchQuery = e.target.value;
+
+		if (searchQuery.length < 3) return;
+
+		debounceTimeout = setTimeout(fetchSuggestions, 300);
+	}
+
+	async function fetchSuggestions() {
+		try {
+			const res = await fetch(
+				`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&addressdetails=1&limit=5`,
+				{
+					headers: {
+						'User-Agent': 'SiagaSorong/1.0'
+					}
+				}
+			);
+			const data = await res.json();
+			suggestions = data;
+		} catch (err) {
+			console.error('❌ Gagal fetch autocomplete:', err);
+		}
+	}
+
+	function selectSuggestion(item) {
+		const lat = parseFloat(item.lat);
+		const lon = parseFloat(item.lon);
+
+		selectedCoords = { lat, lng: lon };
+		map.flyTo({ center: [lon, lat], zoom: 15 });
+
+		suggestions = [];
+		searchQuery = item.display_name;
+
+		handleButtonClick();
+	}
 	function getCurrentLocation() {
 		if (map) {
 			navigator.geolocation.getCurrentPosition(
@@ -82,6 +124,32 @@
 	>
 		Lokasi Saya
 	</button>
+
+	<input
+		type="text"
+		placeholder="Cari alamat..."
+		class="focus:ring-primary absolute top-2 left-2 z-10 w-80 rounded border border-gray-300 bg-white p-2 shadow focus:ring-2 focus:outline-none"
+		bind:value={searchQuery}
+		on:input={onSearchInput}
+	/>
+	<div class="absolute top-12 left-2 z-10 w-80">
+		{#if suggestions.length > 0}
+			<ul class="autocomplete">
+				{#each suggestions as item}
+					<li>
+						<button
+							type="button"
+							class="w-full px-2 py-1 text-left hover:bg-gray-100"
+							on:click={() => selectSuggestion(item)}
+						>
+							{item.display_name}
+						</button>
+					</li>
+				{/each}
+			</ul>
+		{/if}
+	</div>
+
 	<div class="map" bind:this={mapContainer}></div>
 </div>
 

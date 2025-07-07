@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-const PYTHON_BACKEND_URL = 'http://192.168.63.202:5000/predict'; // Ganti sesuai IP Flask
+const PYTHON_BACKEND_URL = 'http://127.0.0.1:5000/predict'; // Ganti sesuai IP Flask
 
 export const POST: RequestHandler = async ({ request }) => {
 	try {
