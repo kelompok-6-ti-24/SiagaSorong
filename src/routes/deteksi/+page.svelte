@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Map from '$lib/components/Map.svelte';
+	import { browser } from '$app/environment';
 	import MapGoogle from '$lib/components/MapGoogle.svelte';
 	let selectedCoords: { lng: number; lat: number } | null = null;
 
@@ -18,48 +18,50 @@
 	}
 
 	async function handleButtonClick() {
+		if (!browser) return;
+
 		if (selectedCoords) {
 			const { lng, lat } = selectedCoords;
 
 			console.log(`Mengirim koordinat: Lng: ${lng}, Lat: ${lat}`);
-			loading = true;
-			showPopup = false; // Menutup popup jika terbuka
+			// loading = true;
+			// showPopup = false; // Menutup popup jika terbuka
 
-			try {
-				const res = await fetch('/deteksi', {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({
-						Lintang: lat,
-						Bujur: lng
-					})
-				});
+			// try {
+			// 	const res = await fetch('/deteksi', {
+			// 		method: 'POST',
+			// 		headers: { 'Content-Type': 'application/json' },
+			// 		body: JSON.stringify({
+			// 			Lintang: lat,
+			// 			Bujur: lng
+			// 		})
+			// 	});
 
-				if (!res.ok) {
-					const errText = await res.text();
-					console.error('Gagal:', errText);
-					alert('Gagal mendapatkan prediksi dari server.');
-					loading = false;
-					showPopup = false;
-					return;
-				}
+			// 	if (!res.ok) {
+			// 		const errText = await res.text();
+			// 		console.error('Gagal:', errText);
+			// 		alert('Gagal mendapatkan prediksi dari server.');
+			// 		loading = false;
+			// 		showPopup = false;
+			// 		return;
+			// 	}
 
-				const data = await res.json();
-				showPopup = true;
-				loading = false;
-				console.log('Data dari server:', data);
-				textKategori = data.label;
-				textAlamat = data.input.Alamat || 'Tidak diketahui';
-				textElevasi = data.input.Elevasi_m + 'm' || 'Tidak diketahui';
-				// probabilitas format = array [0: '0%', 1: '10%', ...]
-				probabilitasList = data.probabilitas;
-				probabilitasList = probabilitasList.map((p) => (p * 100).toFixed(2) + '%');
-			} catch (err) {
-				console.error('❌ Error:', err);
-				loading = false;
-				showPopup = false;
-				alert('Terjadi kesalahan saat mengirim permintaan.');
-			}
+			// 	const data = await res.json();
+			// 	showPopup = true;
+			// 	loading = false;
+			// 	console.log('Data dari server:', data);
+			// 	textKategori = data.label;
+			// 	textAlamat = data.input.Alamat || 'Tidak diketahui';
+			// 	textElevasi = data.input.Elevasi_m + 'm' || 'Tidak diketahui';
+			// 	// probabilitas format = array [0: '0%', 1: '10%', ...]
+			// 	probabilitasList = data.probabilitas;
+			// 	probabilitasList = probabilitasList.map((p) => (p * 100).toFixed(2) + '%');
+			// } catch (err) {
+			// 	console.error('❌ Error:', err);
+			// 	loading = false;
+			// 	showPopup = false;
+			// 	alert('Terjadi kesalahan saat mengirim permintaan.');
+			// }
 		} else {
 			loading = false;
 			showPopup = false;
@@ -115,8 +117,7 @@
 {/if}
 <div class="p-10 pt-28">
 	<div class="">
-		<MapGoogle></MapGoogle>
-		<!-- <Map bind:selectedCoords></Map> -->
+		<MapGoogle bind:longLat={selectedCoords}></MapGoogle>
 	</div>
 
 	<div class="mt-5 flex justify-end gap-5">
