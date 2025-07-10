@@ -38,7 +38,9 @@
 				latLngBounds: sorongBounds,
 				strictBounds: true // Kalau `true`, map bener² gak bisa keluar
 			},
-			mapTypeControl: false
+			mapTypeControl: false,
+			cameraControl: false,
+			streetViewControl: false
 		});
 
 		const autocomplete = new window.google.maps.places.Autocomplete(inputRef);
@@ -74,7 +76,7 @@
 	});
 </script>
 
-<div class="border-primary h-[47em] w-full overflow-hidden rounded border-2 drop-shadow-2xl">
+<div class="border-primary h-[63vh] w-full overflow-hidden rounded border-2 drop-shadow-2xl">
 	{#if Cuaca && Cuaca?.image}
 		<div class="absolute top-2 left-4 z-10 flex flex-col items-center justify-center">
 			<img src={Cuaca.image} class="w-14 drop-shadow-2xl" alt={Cuaca?.weather_desc} />

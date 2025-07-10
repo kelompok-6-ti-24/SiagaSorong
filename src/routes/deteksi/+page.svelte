@@ -24,44 +24,43 @@
 			const { lng, lat } = selectedCoords;
 
 			console.log(`Mengirim koordinat: Lng: ${lng}, Lat: ${lat}`);
-			// loading = true;
-			// showPopup = false; // Menutup popup jika terbuka
+			loading = true;
+			showPopup = false; // Menutup popup jika terbuka
 
-			// try {
-			// 	const res = await fetch('/deteksi', {
-			// 		method: 'POST',
-			// 		headers: { 'Content-Type': 'application/json' },
-			// 		body: JSON.stringify({
-			// 			Lintang: lat,
-			// 			Bujur: lng
-			// 		})
-			// 	});
+			try {
+				const res = await fetch('/deteksi', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						Lintang: lat,
+						Bujur: lng
+					})
+				});
 
-			// 	if (!res.ok) {
-			// 		const errText = await res.text();
-			// 		console.error('Gagal:', errText);
-			// 		alert('Gagal mendapatkan prediksi dari server.');
-			// 		loading = false;
-			// 		showPopup = false;
-			// 		return;
-			// 	}
+				if (!res.ok) {
+					const errText = await res.text();
+					console.error('Gagal:', errText);
+					alert('Gagal mendapatkan prediksi dari server.');
+					loading = false;
+					showPopup = false;
+					return;
+				}
 
-			// 	const data = await res.json();
-			// 	showPopup = true;
-			// 	loading = false;
-			// 	console.log('Data dari server:', data);
-			// 	textKategori = data.label;
-			// 	textAlamat = data.input.Alamat || 'Tidak diketahui';
-			// 	textElevasi = data.input.Elevasi_m + 'm' || 'Tidak diketahui';
-			// 	// probabilitas format = array [0: '0%', 1: '10%', ...]
-			// 	probabilitasList = data.probabilitas;
-			// 	probabilitasList = probabilitasList.map((p) => (p * 100).toFixed(2) + '%');
-			// } catch (err) {
-			// 	console.error('❌ Error:', err);
-			// 	loading = false;
-			// 	showPopup = false;
-			// 	alert('Terjadi kesalahan saat mengirim permintaan.');
-			// }
+				const data = await res.json();
+				showPopup = true;
+				loading = false;
+				console.log('Data dari server:', data);
+				textKategori = data.label;
+				textAlamat = data.input.Alamat || 'Tidak diketahui';
+				textElevasi = data.input.Elevasi_m + 'm' || 'Tidak diketahui';
+				probabilitasList = data.probabilitas;
+				probabilitasList = probabilitasList.map((p: any) => (p * 100).toFixed(2) + '%');
+			} catch (err) {
+				console.error('❌ Error:', err);
+				loading = false;
+				showPopup = false;
+				alert('Terjadi kesalahan saat mengirim permintaan.');
+			}
 		} else {
 			loading = false;
 			showPopup = false;
@@ -126,7 +125,7 @@
 			type="button"
 			disabled={!selectedCoords || loading}
 			class:disabled={loading || !selectedCoords}
-			class=" bg-primary font-inter mt-4 h-16 w-80 cursor-pointer rounded-md p-2 text-3xl text-white"
+			class=" bg-primary font-inter mt-4 h-12 w-72 cursor-pointer rounded-md p-2 text-2xl text-white"
 		>
 			Cek Disini
 		</button>
