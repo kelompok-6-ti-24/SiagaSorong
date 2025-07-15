@@ -74,21 +74,21 @@
 	<div
 		class="absolute top-0 left-0 z-50 flex h-screen w-screen items-center justify-center bg-slate-700/50"
 	>
-		<button
-			class="absolute top-10 right-10 z-50 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-white bg-transparent p-2 text-xl font-bold text-red-500"
-			on:click={() => {
-				showPopup = false;
-				textKategori = '';
-				textAlamat = 'Tidak diketahui';
-				textPrediksi = '';
-				probabilitasList = [];
-			}}
-		>
-			<span class="material-symbols-outlined"> close </span>
-		</button>
 		<div>
 			{#if textKategori}
-				<div class="bg-primary h-full w-full rounded-sm p-5 text-white">
+				<div class="bg-primary relative h-full w-full rounded-sm p-5 text-white">
+					<button
+						class="absolute top-1 right-1 z-50 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-transparent p-2 text-xl font-bold text-white"
+						on:click={() => {
+							showPopup = false;
+							textKategori = '';
+							textAlamat = 'Tidak diketahui';
+							textPrediksi = '';
+							probabilitasList = [];
+						}}
+					>
+						<span class="material-symbols-outlined"> close </span>
+					</button>
 					<h1 class="text-center text-xl font-bold">Hasil Deteksi</h1>
 					<div>
 						<p>Alamat: {textAlamat}</p>

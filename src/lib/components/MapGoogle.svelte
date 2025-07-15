@@ -79,8 +79,10 @@
 <div class="border-primary h-[63vh] w-full overflow-hidden rounded border-2 drop-shadow-2xl">
 	{#if Cuaca && Cuaca?.image}
 		<div class="absolute top-2 left-4 z-10 flex flex-col items-center justify-center">
-			<img src={Cuaca.image} class="w-14 drop-shadow-2xl" alt={Cuaca?.weather_desc} />
-			<p class="font-montserrat text-primary text-shadow-xs">{Cuaca.weather_desc}</p>
+			<img src={Cuaca.image} class="w-14 drop-shadow-2xl select-none" alt={Cuaca?.weather_desc} />
+			<p class="font-inter text-primary font-bold uppercase select-none text-shadow-xs">
+				{Cuaca.weather_desc}
+			</p>
 		</div>
 	{/if}
 	<input

@@ -29,7 +29,7 @@
 	</div>
 	<div class="section-2 bg-primary p-16">
 		<div
-			class="flex h-full w-full items-center justify-center rounded bg-white bg-[url('/images/LeBanjir.jpg')] bg-no-repeat"
+			class="flex h-full w-full items-center justify-center rounded bg-white bg-[url('/images/BANJIR.png')] bg-cover bg-no-repeat"
 		></div>
 	</div>
 </div>
